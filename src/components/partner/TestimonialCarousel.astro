@@ -1,0 +1,681 @@
+---
+import SectionBadge from '../shared/SectionBadge.astro';
+
+interface Props {
+  testimonials: Array<{
+    type: 'featured' | 'quote' | 'standard';
+    partnerLogo?: string;
+    quote: string;
+    authorName: string;
+    authorTitle: string;
+    authorAvatar?: string;
+    backgroundImage?: string;
+  }>;
+  testimonialPartners: string[];
+}
+
+const { testimonials, testimonialPartners } = Astro.props;
+---
+
+<section class="testimonials-section section-with-lines" id="testimonials">
+  <div class="testimonials-container">
+    <div class="testimonials-header-wrap">
+      <SectionBadge text="User Stories" />
+      <h2 class="testimonials-title">What Students Say</h2>
+    </div>
+
+    <div class="carousel-viewport" aria-live="polite">
+      {testimonials.map((testimonial, index) => {
+        if (testimonial.type === 'featured') {
+          return (
+            <div class:list={['testimonial-slide', { 'slide-active': index === 0 }]} data-slide={index}>
+              <div class="testimonial-card card-featured">
+                <div class="featured-content">
+                  <div class="featured-text">
+                    {testimonial.partnerLogo && (
+                      <div class="featured-logo-wrap">
+                        <img src="/assets/figma/testimonial-partner-logo.png" alt="Partner logo" class="featured-logo" loading="lazy" />
+                      </div>
+                    )}
+                    <blockquote class="featured-quote">
+                      {testimonial.quote}
+                    </blockquote>
+                  </div>
+                  <div class="featured-author-area">
+                    <div class="featured-divider"></div>
+                    <div class="featured-author">
+                      <div class="author-info">
+                        <span class="author-name">{testimonial.authorName}</span>
+                        <span class="author-role">{testimonial.authorTitle}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-image">
+                  <img src="/assets/figma/testimonial-bg-1.png" alt="" class="card-bg-img" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          );
+        }
+        if (testimonial.type === 'quote') {
+          return (
+            <div class:list={['testimonial-slide', { 'slide-active': index === 0 }]} data-slide={index}>
+              <div class="testimonial-card card-quote">
+                <div class="quote-content">
+                  <div class="quote-logo-wrap">
+                    <img src="/assets/figma/smartrecover-logo.png" alt="SmartRecover" class="quote-logo" width="60" height="60" loading="lazy" />
+                  </div>
+                  <blockquote class="quote-text">
+                    "{testimonial.quote}"
+                  </blockquote>
+                  <div class="quote-author-area">
+                    <div class="quote-author-row">
+                      <div class="quote-author-info">
+                        {testimonial.authorAvatar && (
+                          <img src="/assets/figma/testimonial-avatar.png" alt={testimonial.authorName} class="quote-avatar" width="60" height="60" loading="lazy" />
+                        )}
+                        <div class="quote-author-text">
+                          <span class="quote-author-name">{testimonial.authorName}</span>
+                          <span class="quote-author-title">{testimonial.authorTitle}</span>
+                        </div>
+                      </div>
+                      <a href="#" class="read-more-link">
+                        Read More
+                        <img src="/assets/figma/caret-down.svg" alt="" width="8" height="4" class="caret-icon" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-image">
+                  <img src="/assets/figma/testimonial-bg-2.png" alt="" class="card-bg-img" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          );
+        }
+        return (
+          <div class:list={['testimonial-slide', { 'slide-active': index === 0 }]} data-slide={index}>
+            <div class="testimonial-card card-standard">
+              <div class="standard-content">
+                <div class="standard-top">
+                  <div class="standard-logo-wrap">
+                    <img src="/assets/figma/budgetdog-logo.png" alt="Budgetdog" class="standard-logo" loading="lazy" />
+                  </div>
+                  <blockquote class="standard-quote">
+                    {testimonial.quote}
+                  </blockquote>
+                </div>
+                <div class="standard-author-area">
+                  <div class="standard-author-row">
+                    <div class="standard-author-info">
+                      <div class="standard-author-text">
+                        <span class="standard-author-name">{testimonial.authorName}</span>
+                        <span class="standard-author-title">{testimonial.authorTitle}</span>
+                      </div>
+                    </div>
+                    <a href="#" class="read-more-link">
+                      Read More
+                      <img src="/assets/figma/caret-down.svg" alt="" width="8" height="4" class="caret-icon" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-image card-image-with-screenshot">
+                <img src="/assets/figma/testimonial-bg-3.png" alt="" class="card-bg-img" loading="lazy" />
+                <img src="/assets/figma/testimonial-screenshot.png" alt="" class="standard-screenshot" loading="lazy" />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+
+    <div class="carousel-nav">
+      <button class="carousel-arrow" aria-label="Previous testimonial" id="carousel-prev">
+        <img src="/assets/figma/carousel-arrow-left.svg?v=2" alt="" width="24" height="24" />
+      </button>
+      <div class="carousel-tabs">
+        {testimonialPartners.map((partner, index) => (
+          <button
+            class:list={['carousel-tab', { 'tab-active': index === 0 }]}
+            data-tab-index={index}
+          >
+            {partner}
+          </button>
+        ))}
+      </div>
+      <button class="carousel-arrow" aria-label="Next testimonial" id="carousel-next">
+        <img src="/assets/figma/carousel-arrow-right.svg" alt="" width="24" height="24" />
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials-section {
+    background: white;
+    overflow: hidden;
+    padding: 80px 0 60px;
+  }
+
+  .testimonials-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .testimonials-header-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+
+  .testimonials-title {
+    font-family: var(--font-primary);
+    font-size: 52px;
+    font-weight: 500;
+    line-height: 60px;
+    letter-spacing: -3.12px;
+    text-transform: capitalize;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  /* Slide system */
+  .carousel-viewport {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .testimonial-slide {
+    display: none;
+    animation: fadeIn 0.35s ease;
+  }
+
+  .testimonial-slide.slide-active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Shared card base */
+  .testimonial-card {
+    display: flex;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(26, 26, 26, 0.12);
+    box-shadow: var(--shadow-card);
+    width: 100%;
+  }
+
+  /* Shared image column */
+  .card-image {
+    width: 50%;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-image-with-screenshot {
+    position: relative;
+  }
+
+  .standard-screenshot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: cover;
+  }
+
+  /* Featured card */
+  .card-featured {
+    min-height: 520px;
+    background: white;
+    border-color: rgba(26, 26, 26, 0.15);
+  }
+
+  .featured-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    padding: 48px 40px 36px;
+    min-width: 0;
+  }
+
+  .featured-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .featured-logo-wrap {
+    height: 40px;
+  }
+
+  .featured-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .featured-quote {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .featured-author-area {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .featured-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(26, 26, 26, 0.1);
+  }
+
+  .featured-author {
+    display: flex;
+    align-items: center;
+  }
+
+  .author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .author-name {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    color: var(--color-text-primary);
+  }
+
+  .author-role {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.28px;
+    color: rgba(26, 26, 26, 0.7);
+  }
+
+  /* Quote card */
+  .card-quote {
+    min-height: 480px;
+    background: #F6F6F6;
+  }
+
+  .quote-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 48px 40px 36px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .quote-logo-wrap {
+    width: 52px;
+    height: 52px;
+    overflow: hidden;
+  }
+
+  .quote-logo {
+    width: 52px;
+    height: 52px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .quote-text {
+    font-family: var(--font-secondary);
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 36px;
+    letter-spacing: -0.56px;
+    color: var(--color-text-primary);
+    margin: 0;
+    font-style: normal;
+  }
+
+  .quote-author-area {
+    margin-top: auto;
+  }
+
+  .quote-author-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .quote-author-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .quote-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .quote-author-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .quote-author-name {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    color: var(--color-text-primary);
+  }
+
+  .quote-author-title {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.28px;
+    color: rgba(26, 26, 26, 0.7);
+  }
+
+  .read-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.28px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .read-more-link:hover {
+    opacity: 0.7;
+  }
+
+  .caret-icon {
+    transform: rotate(-90deg);
+  }
+
+  /* Standard card */
+  .card-standard {
+    min-height: 480px;
+    background: white;
+  }
+
+  .standard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 48px 40px 36px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .standard-top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .standard-logo-wrap {
+    height: 40px;
+  }
+
+  .standard-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .standard-quote {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .standard-author-area {
+    margin-top: auto;
+  }
+
+  .standard-author-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .standard-author-info {
+    display: flex;
+    align-items: center;
+  }
+
+  .standard-author-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .standard-author-name {
+    font-family: var(--font-secondary);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    color: var(--color-text-primary);
+  }
+
+  .standard-author-title {
+    font-family: var(--font-secondary);
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: -0.28px;
+    color: rgba(26, 26, 26, 0.7);
+  }
+
+  /* Navigation */
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+  }
+
+  .carousel-tabs {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .carousel-tab {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    color: rgba(26, 26, 26, 0.5);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+
+  .carousel-tab:hover {
+    color: var(--color-text-primary);
+  }
+
+  .carousel-tab.tab-active {
+    font-weight: 500;
+    color: #44C0C0;
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    background: white;
+    border: 1px solid rgba(26, 26, 26, 0.08);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .carousel-arrow:hover {
+    background: var(--color-surface-muted);
+    transform: scale(1.05);
+  }
+
+  .carousel-arrow:active {
+    transform: scale(0.98);
+  }
+
+  .carousel-arrow:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .testimonials-section {
+      padding: 60px 0 40px;
+    }
+
+    .testimonials-title {
+      font-size: 40px;
+      line-height: 48px;
+      letter-spacing: -2.4px;
+    }
+
+    .testimonial-card {
+      flex-direction: column;
+    }
+
+    .card-image {
+      width: 100%;
+      height: 300px;
+    }
+
+    .quote-text {
+      font-size: 22px;
+      line-height: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .featured-content,
+    .quote-content,
+    .standard-content {
+      padding: 28px 24px;
+    }
+
+    .featured-quote,
+    .standard-quote {
+      font-size: 18px;
+    }
+
+    .quote-text {
+      font-size: 20px;
+      line-height: 28px;
+    }
+
+    .carousel-tabs {
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .carousel-tab {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    function init() {
+      var slides = document.querySelectorAll('.testimonial-slide');
+      var tabs = document.querySelectorAll('.carousel-tab');
+      var prevBtn = document.getElementById('carousel-prev');
+      var nextBtn = document.getElementById('carousel-next');
+      var currentIndex = 0;
+      var total = slides.length;
+
+      function goTo(idx) {
+        if (idx < 0) idx = total - 1;
+        if (idx >= total) idx = 0;
+        currentIndex = idx;
+
+        slides.forEach(function(s, i) {
+          if (i === currentIndex) {
+            s.classList.add('slide-active');
+          } else {
+            s.classList.remove('slide-active');
+          }
+        });
+
+        tabs.forEach(function(t, i) {
+          if (i === currentIndex) {
+            t.classList.add('tab-active');
+          } else {
+            t.classList.remove('tab-active');
+          }
+        });
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', function() { goTo(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { goTo(currentIndex + 1); });
+      tabs.forEach(function(tab, i) {
+        tab.addEventListener('click', function() { goTo(i); });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

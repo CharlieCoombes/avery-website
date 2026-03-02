@@ -1,0 +1,240 @@
+---
+interface Props {
+  badge: string;
+  title: string;
+  description: string;
+  bulletPoints: Array<{
+    text: string;
+    active: boolean;
+  }>;
+  screenshot: string;
+  imagePosition: 'left' | 'right';
+}
+
+const { badge, title, description, bulletPoints, screenshot, imagePosition } = Astro.props;
+const isLeft = imagePosition === 'left';
+---
+
+<div class:list={['feature-card', `image-${imagePosition}`]}>
+  {isLeft ? (
+    <>
+      <div class="feature-image-wrap">
+        <img
+          src={screenshot}
+          alt={`Avery ${badge} feature screenshot`}
+          class="feature-screenshot"
+          loading="lazy"
+        />
+      </div>
+      <div class="feature-text">
+        <div class="feature-text-top">
+          <p class="feature-badge-text">• {badge}</p>
+          <h3 class="heading-card feature-title">{title}</h3>
+          <p class="feature-description">{description}</p>
+        </div>
+        <div class="feature-bullets">
+          {bulletPoints.map((point) => (
+            <div class="feature-bullet-group">
+              <p class:list={['feature-bullet', { 'bullet-active': point.active }]}>
+                {point.text}
+              </p>
+              <div class="bullet-separator"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  ) : (
+    <>
+      <div class="feature-text">
+        <div class="feature-text-top">
+          <p class="feature-badge-text">• {badge}</p>
+          <h3 class="heading-card feature-title">{title}</h3>
+          <p class="feature-description">{description}</p>
+        </div>
+        <div class="feature-bullets">
+          {bulletPoints.map((point) => (
+            <div class="feature-bullet-group">
+              <p class:list={['feature-bullet', { 'bullet-active': point.active }]}>
+                {point.text}
+              </p>
+              <div class="bullet-separator"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="feature-image-wrap">
+        <img
+          src={screenshot}
+          alt={`Avery ${badge} feature screenshot`}
+          class="feature-screenshot"
+          loading="lazy"
+        />
+      </div>
+    </>
+  )}
+</div>
+
+<style>
+  .feature-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background: white;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    min-height: 540px;
+    gap: 20px;
+  }
+
+  .feature-card.image-right {
+    padding: 20px 20px 20px 40px;
+  }
+
+  .feature-card.image-left {
+    padding: 20px 40px 20px 20px;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 0;
+    min-height: 460px;
+    padding: 20px 0;
+  }
+
+  .feature-text-top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .feature-badge-text {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.64px;
+    color: #44C0C0;
+    margin: 0;
+  }
+
+  .feature-title {
+    color: var(--color-text-primary);
+    margin: 0;
+    max-width: 368px;
+  }
+
+  .feature-description {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.64px;
+    color: rgba(26, 26, 26, 0.7);
+    margin: 0;
+    max-width: 358px;
+  }
+
+  .feature-bullets {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature-bullet-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .feature-bullet {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.72px;
+    color: var(--color-text-primary);
+    opacity: 0.5;
+    margin: 0;
+  }
+
+  .feature-bullet.bullet-active {
+    opacity: 1;
+  }
+
+  .bullet-separator {
+    width: 100%;
+    max-width: 440px;
+    height: 1px;
+    background: rgba(26, 26, 26, 0.1);
+  }
+
+  /* Image container */
+  .feature-image-wrap {
+    width: 55%;
+    max-width: 680px;
+    height: 500px;
+    flex-shrink: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #e8f8f8 0%, #f0fafa 50%, #e0f4f4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+  }
+
+  .feature-screenshot {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  @media (max-width: 1024px) {
+    .feature-card {
+      flex-direction: column;
+      min-height: auto;
+      gap: 0;
+    }
+
+    .feature-card.image-right,
+    .feature-card.image-left {
+      padding: 24px;
+    }
+
+    .feature-card.image-left {
+      flex-direction: column-reverse;
+    }
+
+    .feature-text {
+      min-height: auto;
+      padding: 0 0 24px;
+    }
+
+    .feature-image-wrap {
+      width: 100%;
+      max-width: none;
+      height: 350px;
+    }
+
+    .feature-description,
+    .feature-title {
+      max-width: 100%;
+    }
+
+    .bullet-separator {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-image-wrap {
+      height: 280px;
+      padding: 20px;
+    }
+  }
+</style>

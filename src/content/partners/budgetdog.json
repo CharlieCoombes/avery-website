@@ -1,0 +1,173 @@
+{
+  "partnerName": "Budgetdog",
+  "partnerLogo": "/logos-images/bd-logo.png",
+  "averyLogo": "/logos-images/Artboard 1.png",
+  "hero": {
+    "headline": "From Chaos to Clarity:\nFully Automated Budgeting",
+    "subheadline": "Connect accounts directly to your Budgetdog template and help put your budgeting on autopilot",
+    "ctaText": "Try risk free for 30 days",
+    "ctaLink": "#pricing",
+    "youtubeVideoId": "9Or1m80rTKk"
+  },
+  "socialProof": {
+    "rating": 5,
+    "userCount": "1,130+",
+    "label": "Loved by"
+  },
+  "howItWorks": {
+    "badge": "How Avery Works",
+    "title": "Setup in Minutes Manage your Finances",
+    "steps": [
+      {
+        "text": "Install Avery Browser Extension",
+        "active": true,
+        "bgImage": "/assets/figma/hiw-step1-bg.png"
+      },
+      {
+        "text": "Sync your Bank Accounts",
+        "active": false,
+        "bgImage": "/assets/figma/hiw-step2-bg.png",
+        "screenshot": "/assets/figma/hiw-step2-screenshot.png"
+      },
+      {
+        "text": "Build Reports",
+        "active": false,
+        "bgImage": "/assets/figma/hiw-step1-bg.png",
+        "screenshot": "/assets/figma/hiw-step3-screenshot.png"
+      }
+    ]
+  },
+  "features": [
+    {
+      "badge": "AI Categorization",
+      "title": "Smart sorting. While you sleep.",
+      "description": "Avery's AI automatically organizes and categorizes your transaction data based on your rules, keeping your budget updated without you lifting a finger.",
+      "bulletPoints": [
+        { "text": "Automated transaction tagging", "active": true },
+        { "text": "Hands-free spending insights", "active": false }
+      ],
+      "screenshot": "/logos-images/aicat-automated.png",
+      "imagePosition": "right"
+    },
+    {
+      "badge": "Auto Update",
+      "title": "Zero manual work.",
+      "description": "Import every transaction across all your accounts with just two clicks, giving you an instant, accurate view of your finances going back two years.",
+      "bulletPoints": [
+        { "text": "Two-year historical retrieval", "active": false },
+        { "text": "Two-click bulk importing", "active": true },
+        { "text": "Multi-account transaction mapping", "active": false }
+      ],
+      "screenshot": "/logos-images/Group 2085662633.png",
+      "imagePosition": "left"
+    },
+    {
+      "badge": "Custom Rules",
+      "title": "Set your rules. We'll do the rest.",
+      "description": "Avery automatically categorizes your data and syncs your accounts daily while you sleep, so you stay updated without lifting a finger.",
+      "bulletPoints": [
+        { "text": "Custom categorization rules", "active": true },
+        { "text": "Daily automated syncing", "active": false }
+      ],
+      "screenshot": "/logos-images/Group 2085662653.png",
+      "imagePosition": "right"
+    }
+  ],
+  "testimonials": [
+    {
+      "type": "quote",
+      "partnerLogo": "",
+      "quote": "Framer allowed us to ship high-performing, beautifully designed pages at record speed, all while keeping design control in-house.",
+      "authorName": "Abiola Braimah",
+      "authorTitle": "Cofounder Astrae Design",
+      "authorAvatar": "/assets/figma/testimonial-avatar.png",
+      "backgroundImage": "/assets/figma/testimonial-bg-2.png"
+    },
+    {
+      "type": "featured",
+      "partnerLogo": "/assets/figma/testimonial-partner-logo.png",
+      "quote": "Avery has completely simplified my financial management. It seamlessly consolidates every bank transaction into a single Google Sheet, saving me from the manual import grind I used to endure. The setup was incredibly fast, and the auto-sync handles the heavy lifting while fitting perfectly into my daily workflow.",
+      "authorName": "Radoslav Bali",
+      "authorTitle": "Founder, Lexos Move",
+      "backgroundImage": "/assets/figma/testimonial-bg-1.png"
+    },
+    {
+      "type": "standard",
+      "partnerLogo": "/assets/figma/budgetdog-logo.png",
+      "quote": "Avery has completely simplified my financial management. It seamlessly consolidates every bank transaction into a single Google Sheet, saving me from the manual import grind I used to endure. The setup was incredibly fast, and the auto-sync handles the heavy lifting while fitting perfectly into my daily workflow.",
+      "authorName": "Prasanth Raj",
+      "authorTitle": "Founder and CEO, FetchTalent AI",
+      "backgroundImage": "/assets/figma/testimonial-bg-3.png"
+    }
+  ],
+  "testimonialPartners": ["GenYSolutions", "Smart Recover", "FetchtalentAI", "Midas", "Bhyte Software"],
+  "pricing": {
+    "badge": "Pricing Plans",
+    "headline": "Exclusive Discount for Budgetdog Members",
+    "plans": [
+      {
+        "name": "Monthly Plan",
+        "price": "$17.99",
+        "period": "/month",
+        "originalPrice": "$19.99",
+        "ctaText": "Get 30 days free",
+        "ctaLink": "#",
+        "features": [
+          "Unlimited access to all features",
+          "Priority customer support",
+          "Connect to banks across Europe",
+          "Unlimited bank connections",
+          "Advanced financial analytics",
+          "Fully customize Budgetdog template"
+        ]
+      },
+      {
+        "name": "Annual Plan",
+        "price": "$195",
+        "period": "/year",
+        "originalPrice": "$215.88",
+        "ctaText": "Get 30 days free",
+        "ctaLink": "#",
+        "features": [
+          "Unlimited access to all features",
+          "Priority customer support",
+          "Connect to banks across Europe",
+          "Unlimited bank connections",
+          "Advanced financial analytics",
+          "Fully customize Budgetdog template"
+        ]
+      }
+    ]
+  },
+  "faqs": [
+    {
+      "question": "Is my financial data secure with Avery?",
+      "answer": "Yes, absolutely. Avery uses Plaid and GoCardless to securely connect to your bank accounts. We never store your banking credentials. All data is encrypted in transit and at rest using bank-level AES-256 encryption. Your financial data is only used to populate your spreadsheet — we never sell or share it with third parties."
+    },
+    {
+      "question": "How does Avery connect to my bank accounts?",
+      "answer": "Avery uses trusted third-party providers like Plaid and GoCardless to establish secure connections with your bank. Simply log in through our extension, select your bank, and authorize the connection. The entire process takes less than 2 minutes."
+    },
+    {
+      "question": "How do I get started with Avery?",
+      "answer": "Getting started is simple: install the Avery browser extension, connect your bank accounts through our secure portal, and select your Budgetdog template. Your transactions will start syncing automatically within minutes."
+    },
+    {
+      "question": "How do I use Google Sheets for accounting?",
+      "answer": "Google Sheets is a powerful tool for personal accounting when paired with Avery. Our integration automatically imports your bank transactions, categorizes them with AI, and populates your chosen template. You get the flexibility of a spreadsheet with the automation of dedicated accounting software."
+    },
+    {
+      "question": "Can Google Sheets be used for accounting?",
+      "answer": "Absolutely. Many individuals and small businesses use Google Sheets for accounting because of its flexibility, collaboration features, and zero cost. With Avery, you get automated bank syncing and AI categorization that makes Google Sheets just as powerful as expensive accounting software."
+    },
+    {
+      "question": "How do you do bookkeeping on Google Docs?",
+      "answer": "While Google Docs isn't ideal for bookkeeping, Google Sheets (part of the same suite) is perfect for it. With Avery's browser extension, your bank transactions are automatically imported and categorized into your spreadsheet, turning Google Sheets into a fully automated bookkeeping system."
+    }
+  ],
+  "seo": {
+    "title": "Budgetdog + Avery | Automated Budgeting for Google Sheets",
+    "description": "Connect accounts directly to your Budgetdog template and put your budgeting on autopilot. AI-powered categorization, automatic bank syncing, and custom rules.",
+    "canonical": "https://averyapp.ai/partners/budgetdog"
+  }
+}

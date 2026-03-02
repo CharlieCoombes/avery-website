@@ -1,0 +1,374 @@
+---
+interface Props {
+  badge: string;
+  title: string;
+  steps: Array<{
+    text: string;
+    active: boolean;
+    bgImage: string;
+    screenshot?: string;
+  }>;
+}
+
+const { badge, title, steps } = Astro.props;
+const activeIndex = steps.findIndex((s: typeof steps[number]) => s.active);
+const defaultActive = activeIndex >= 0 ? activeIndex : 0;
+---
+
+<section class="how-it-works section-with-lines" id="how-it-works">
+  <div class="hiw-container">
+    <div class="hiw-card">
+      <div class="hiw-text">
+        <div class="hiw-top">
+          <p class="hiw-badge">• {badge}</p>
+          <h2 class="heading-card hiw-title">{title}</h2>
+        </div>
+        <div class="hiw-steps">
+          {steps.map((step: typeof steps[number], index: number) => (
+            <div class="hiw-step-group">
+              <button
+                class:list={['hiw-step', { 'step-active': index === defaultActive }]}
+                data-step-index={index}
+                type="button"
+              >
+                {index + 1}. {step.text}
+              </button>
+              <div class="step-separator">
+                <div class="step-separator-line"></div>
+                {index === defaultActive && <div class="step-separator-highlight"></div>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="hiw-image-container">
+        {steps.map((step: typeof steps[number], index: number) => (
+          <div
+            class:list={['hiw-image-slide', { 'slide-active': index === defaultActive }]}
+            data-slide-index={index}
+          >
+          <div class="hiw-image-bg">
+            {step.screenshot ? (
+              <div class:list={['hiw-screenshot-wrap', `hiw-screenshot-wrap-${index + 1}`]}>
+                <img
+                  src={step.screenshot}
+                  alt={`Step ${index + 1}: ${step.text}`}
+                  class:list={['hiw-screenshot', `hiw-screenshot-${index + 1}`]}
+                  loading={index === defaultActive ? 'eager' : 'lazy'}
+                />
+              </div>
+            ) : (
+              <div class="hiw-full-image">
+                <img
+                  src={step.bgImage}
+                  alt={`Step ${index + 1}: ${step.text}`}
+                  class="hiw-full-img"
+                  loading={index === defaultActive ? 'eager' : 'lazy'}
+                />
+              </div>
+            )}
+          </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (function() {
+    function init() {
+      var section = document.querySelector('.how-it-works');
+      if (!section) return;
+
+      var stepButtons = section.querySelectorAll('.hiw-step');
+      var slides = section.querySelectorAll('.hiw-image-slide');
+      var separators = section.querySelectorAll('.hiw-step-group');
+
+      stepButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var index = parseInt(btn.getAttribute('data-step-index') || '0', 10);
+
+          stepButtons.forEach(function(b) { b.classList.remove('step-active'); });
+          btn.classList.add('step-active');
+
+          slides.forEach(function(s) { s.classList.remove('slide-active'); });
+          var targetSlide = section.querySelector('[data-slide-index="' + index + '"]');
+          if (targetSlide) targetSlide.classList.add('slide-active');
+
+          separators.forEach(function(sep) {
+            var highlight = sep.querySelector('.step-separator-highlight');
+            if (highlight) highlight.remove();
+          });
+          var activeSep = separators[index] ? separators[index].querySelector('.step-separator') : null;
+          if (activeSep) {
+            var highlight = document.createElement('div');
+            highlight.className = 'step-separator-highlight';
+            activeSep.appendChild(highlight);
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>
+
+<style>
+  .how-it-works {
+    height: 753px;
+    display: flex;
+    align-items: center;
+    background: white;
+    overflow: hidden;
+  }
+
+  .hiw-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .hiw-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 600px;
+    background: white;
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    border-radius: 32px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    padding: 0 20px 0 40px;
+  }
+
+  .hiw-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1 0 0;
+    height: 100%;
+    padding: 40px 0;
+    min-width: 0;
+  }
+
+  .hiw-top {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hiw-badge {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.64px;
+    color: #44C0C0;
+    margin: 0;
+  }
+
+  .hiw-title {
+    color: var(--color-text-primary);
+    margin: 0;
+    max-width: 415px;
+  }
+
+  .hiw-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hiw-step-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hiw-step {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.72px;
+    color: var(--color-text-primary);
+    opacity: 0.5;
+    margin: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    background: none;
+    border: none;
+    padding: 0;
+    text-align: left;
+    line-height: normal;
+  }
+
+  .hiw-step.step-active {
+    opacity: 1;
+  }
+
+  .hiw-step:hover {
+    opacity: 0.8;
+  }
+
+  .hiw-step:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .step-separator {
+    position: relative;
+    width: 512px;
+    height: 1px;
+  }
+
+  .step-separator-line {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.1);
+  }
+
+  .step-separator-highlight {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1px;
+    width: 160px;
+    background: rgba(26, 26, 26, 0.3);
+  }
+
+  .hiw-image-container {
+    position: relative;
+    width: 740px;
+    height: 560px;
+    border-radius: 24px;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .hiw-image-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .hiw-image-slide.slide-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hiw-image-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .hiw-full-image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #e8f8f8 0%, #f0fafa 50%, #e0f4f4 100%);
+    padding: 40px;
+  }
+
+  .hiw-full-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .hiw-screenshot-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .hiw-screenshot-wrap-2 {
+    background: linear-gradient(135deg, #e8f8f8 0%, #f0fafa 50%, #e0f4f4 100%);
+    padding: 40px;
+  }
+
+  .hiw-screenshot-wrap-3 {
+    background: linear-gradient(135deg, #f5f7fa 0%, #eef1f5 50%, #f0f3f7 100%);
+    padding: 40px;
+  }
+
+  .hiw-screenshot {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .hiw-screenshot-2 {
+    object-position: top left;
+  }
+
+  .hiw-screenshot-3 {
+    object-position: top center;
+  }
+
+  @media (max-width: 1280px) {
+    .hiw-image-container {
+      width: 50%;
+      min-width: 400px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .how-it-works {
+      height: auto;
+      padding: 60px 0;
+    }
+
+    .hiw-card {
+      flex-direction: column;
+      height: auto;
+      padding: 24px;
+    }
+
+    .hiw-text {
+      height: auto;
+      padding: 0 0 24px;
+      gap: 32px;
+    }
+
+    .hiw-image-container {
+      position: relative;
+      width: 100%;
+      min-width: 0;
+      min-height: 400px;
+    }
+
+    .step-separator {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hiw-image-container {
+      min-height: 300px;
+    }
+  }
+</style>

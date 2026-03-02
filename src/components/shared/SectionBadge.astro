@@ -1,0 +1,49 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class="section-badge">
+  <img src="/assets/figma/section-badge-icon.svg" alt="" class="badge-icon" width="13" height="14" />
+  <span class="badge-separator"></span>
+  <span class="badge-label">{text}</span>
+</div>
+
+<style>
+  .section-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
+    padding: 4px 12px 4px 8px;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+    background: var(--color-surface);
+  }
+
+  .badge-icon {
+    width: 13px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .badge-separator {
+    width: 1px;
+    height: 14px;
+    background: rgba(26, 26, 26, 0.1);
+    flex-shrink: 0;
+  }
+
+  .badge-label {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.64px;
+    color: rgba(26, 26, 26, 0.7);
+    text-align: center;
+    white-space: nowrap;
+  }
+</style>

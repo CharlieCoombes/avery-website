@@ -1,0 +1,480 @@
+---
+interface Props {
+  partnerName: string;
+  partnerLogo: string;
+  averyLogo: string;
+  headline: string;
+  subheadline: string;
+  ctaText: string;
+  ctaLink: string;
+  youtubeVideoId: string;
+  socialProof: {
+    rating: number;
+    userCount: string;
+    label: string;
+  };
+}
+
+const {
+  partnerName,
+  partnerLogo,
+  averyLogo,
+  headline,
+  subheadline,
+  ctaText,
+  ctaLink,
+  youtubeVideoId,
+  socialProof,
+} = Astro.props;
+
+const headlineLines = headline.split('\n');
+const avatars = [
+  '/assets/figma/avatar-1.png',
+  '/assets/figma/avatar-2.png',
+  '/assets/figma/avatar-3.png',
+  '/assets/figma/avatar-4.png',
+  '/assets/figma/avatar-5.png',
+];
+---
+
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-container">
+      <img src="/assets/figma/hero-bg-gradient.svg" alt="" class="hero-bg-gradient" />
+      <div class="hero-bg-mesh-wrap">
+        <img src="/assets/figma/hero-bg-mesh.svg" alt="" class="hero-bg-mesh" />
+      </div>
+    </div>
+    <div class="hero-overlay-container">
+      <img src="/assets/figma/hero-overlay.png" alt="" class="hero-overlay-img" />
+    </div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="partner-bar">
+        <img src="/assets/figma/budgetdog-logo.png" alt={`${partnerName} logo`} class="partner-logo" width="178" height="32" />
+        <span class="partner-plus">+</span>
+        <div class="avery-logo-wrap">
+          <img src="/assets/figma/avery-logo-hero.png" alt="Avery logo" class="avery-logo-hero" width="97" height="32" />
+        </div>
+      </div>
+
+      <div class="hero-text-group">
+        <div class="hero-headline-group">
+          <h1 class="heading-hero hero-headline">
+            {headlineLines.map((line, i) => (
+              <span>{line}{i < headlineLines.length - 1 && <br />}</span>
+            ))}
+          </h1>
+          <p class="hero-subheadline">{subheadline}</p>
+        </div>
+        <a href={ctaLink} class="hero-cta">
+          {ctaText}
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-video-glass">
+      <div class="hero-video-frame">
+        <div class="video-container" id="video-container">
+          <img
+            src="/assets/figma/video-thumbnail.png"
+            alt={`${partnerName} and Avery product demo video`}
+            class="video-thumbnail"
+            loading="lazy"
+          />
+          <button class="video-play-btn" aria-label="Play video" id="play-video-btn">
+            <img src="/assets/figma/play-button.svg" alt="" width="96" height="96" class="play-btn-svg" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="social-proof">
+      <div class="social-avatars">
+        {avatars.map((avatar, i) => (
+          <img src={avatar} alt="" class="avatar-img" width="40" height="40" style={`z-index: ${5 - i};`} loading="lazy" />
+        ))}
+      </div>
+      <div class="social-info">
+        <div class="social-stars">
+          {Array.from({ length: socialProof.rating }).map(() => (
+            <img src="/assets/figma/star.svg" alt="" width="20" height="20" class="star-icon" />
+          ))}
+        </div>
+        <p class="social-text">{socialProof.label} {socialProof.userCount} users</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: white;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .hero-bg-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1880px;
+    height: 1439px;
+    border-radius: 32px;
+    overflow: hidden;
+  }
+
+  .hero-bg-gradient {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1920px;
+    height: 1499px;
+    object-fit: cover;
+  }
+
+  .hero-bg-mesh-wrap {
+    position: absolute;
+    top: -257px;
+    left: calc(50% + 143.5px);
+    transform: translateX(-50%);
+    width: 2865px;
+    height: 1919px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-bg-mesh {
+    transform: rotate(90deg);
+    width: 1919px;
+    height: 2865px;
+  }
+
+  .hero-overlay-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1880px;
+    height: 1439px;
+    border-radius: 32px;
+    overflow: hidden;
+  }
+
+  .hero-overlay-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.15;
+    pointer-events: none;
+    border-radius: 32px;
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 223px;
+    padding-bottom: 90px;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .partner-bar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 34px;
+  }
+
+  .partner-logo {
+    height: 32px;
+    width: 178px;
+    object-fit: contain;
+  }
+
+  .partner-plus {
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 500;
+    color: black;
+    width: 12px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .avery-logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    height: 36px;
+    width: 97px;
+  }
+
+  .avery-logo-hero {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .hero-text-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    width: 882px;
+    max-width: 100%;
+  }
+
+  .hero-headline-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-headline {
+    max-width: 882px;
+    text-align: center;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .hero-subheadline {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.64px;
+    color: rgba(26, 26, 26, 0.7);
+    text-align: center;
+    margin: 0;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 8px 28px;
+    background: var(--color-primary);
+    color: white;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+  }
+
+  .hero-cta:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+  }
+
+  .hero-cta:active {
+    transform: translateY(0);
+  }
+
+  .hero-video-glass {
+    margin-top: 40px;
+    width: 1280px;
+    max-width: calc(100% - 40px);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(7px);
+    border: 1px solid rgba(26, 26, 26, 0.05);
+    border-radius: 20px;
+    padding: 8px;
+  }
+
+  .hero-video-frame {
+    width: 100%;
+    aspect-ratio: 1264 / 710;
+    border-radius: 16px;
+    border: 1px solid rgba(26, 26, 26, 0.15);
+    overflow: hidden;
+  }
+
+  .video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px;
+  }
+
+  .video-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .video-play-btn:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .video-play-btn:active {
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+
+  .play-btn-svg {
+    width: 96px;
+    height: 96px;
+    display: block;
+  }
+
+  .social-proof {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 12px;
+    margin-top: 40px;
+  }
+
+  .social-avatars {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+  }
+
+  .avatar-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    object-fit: cover;
+    margin-right: -20px;
+    position: relative;
+  }
+
+  .avatar-img:last-child {
+    margin-right: 0;
+  }
+
+  .social-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .social-stars {
+    display: flex;
+    align-items: center;
+  }
+
+  .star-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .social-text {
+    font-family: var(--font-primary);
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(26, 26, 26, 0.7);
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-inner {
+      padding-top: 160px;
+      padding-bottom: 60px;
+    }
+
+    .hero-content {
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .hero-bg-container,
+    .hero-overlay-container {
+      width: calc(100% - 40px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-inner {
+      padding-top: 120px;
+      padding-bottom: 40px;
+    }
+
+    .hero-headline {
+      font-size: 40px;
+      line-height: 42px;
+      letter-spacing: -2.4px;
+    }
+
+    .partner-logo {
+      height: 24px;
+      width: auto;
+    }
+
+    .avery-logo-hero {
+      height: 24px;
+    }
+
+    .social-proof {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script define:vars={{ youtubeVideoId }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const playBtn = document.getElementById('play-video-btn');
+    const container = document.getElementById('video-container');
+    if (playBtn && container) {
+      const handlePlay = () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0`;
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;border-radius:16px;';
+        container.innerHTML = '';
+        container.appendChild(iframe);
+      };
+      playBtn.addEventListener('click', handlePlay);
+      container.addEventListener('click', handlePlay);
+    }
+  });
+</script>

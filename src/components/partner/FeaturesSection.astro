@@ -1,0 +1,87 @@
+---
+import SectionBadge from '../shared/SectionBadge.astro';
+import FeatureCard from './FeatureCard.astro';
+
+interface Props {
+  features: Array<{
+    badge: string;
+    title: string;
+    description: string;
+    bulletPoints: Array<{
+      text: string;
+      active: boolean;
+    }>;
+    screenshot: string;
+    imagePosition: 'left' | 'right';
+  }>;
+  partnerName: string;
+}
+
+const { features, partnerName } = Astro.props;
+---
+
+<section class="features-section section-with-lines" id="features">
+  <div class="features-container">
+    <div class="features-header">
+      <SectionBadge text="Features" />
+      <h2 class="heading-hero features-title">
+        Sync Your Bank Data<br />to {partnerName}
+      </h2>
+    </div>
+
+    <div class="features-cards">
+      {features.map((feature) => (
+        <FeatureCard {...feature} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-section {
+    height: 2093px;
+    background: white;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .features-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .features-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding-top: 83px;
+    margin-bottom: 46px;
+  }
+
+  .features-title {
+    color: var(--color-text-primary);
+    max-width: 513px;
+    margin: 0;
+    line-height: 60px;
+  }
+
+  .features-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .features-section {
+      height: auto;
+      padding: 60px 0;
+    }
+
+    .features-header {
+      padding-top: 0;
+    }
+  }
+</style>

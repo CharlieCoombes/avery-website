@@ -1,0 +1,111 @@
+---
+import { getCollection } from 'astro:content';
+import PartnerLayout from '../../layouts/PartnerLayout.astro';
+import Navbar from '../../components/shared/Navbar.astro';
+import HeroSection from '../../components/partner/HeroSection.astro';
+import HowItWorks from '../../components/partner/HowItWorks.astro';
+import HowItWorksV2 from '../../components/partner/HowItWorksV2.astro';
+import FeaturesSection from '../../components/partner/FeaturesSection.astro';
+import TestimonialCarousel from '../../components/partner/TestimonialCarousel.astro';
+import PricingSection from '../../components/partner/PricingSection.astro';
+import FAQSection from '../../components/partner/FAQSection.astro';
+import Footer from '../../components/shared/Footer.astro';
+
+export async function getStaticPaths() {
+  const partners = await getCollection('partners');
+  return partners.map((partner) => ({
+    params: { slug: partner.id },
+    props: { partner },
+  }));
+}
+
+const { partner } = Astro.props;
+const data = partner.data;
+
+// JSON-LD structured data
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": data.faqs.map((faq: { question: string; answer: string }) => ({
+    "@type": "Question",
+    "name": faq.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.answer,
+    },
+  })),
+};
+
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Avery",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "offers": data.pricing.plans.map((plan: { name: string; price: string; }) => ({
+    "@type": "Offer",
+    "name": plan.name,
+    "price": plan.price.replace('$', ''),
+    "priceCurrency": "USD",
+  })),
+};
+---
+
+<PartnerLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  canonical={data.seo.canonical}
+  partnerName={data.partnerName}
+>
+  <!-- Structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(softwareSchema)} />
+
+  <Navbar ctaText="Get 30 days free" ctaLink="#pricing" />
+
+  <main id="main-content">
+    <HeroSection
+      partnerName={data.partnerName}
+      partnerLogo={data.partnerLogo}
+      averyLogo={data.averyLogo}
+      headline={data.hero.headline}
+      subheadline={data.hero.subheadline}
+      ctaText={data.hero.ctaText}
+      ctaLink={data.hero.ctaLink}
+      youtubeVideoId={data.hero.youtubeVideoId}
+      socialProof={data.socialProof}
+    />
+
+    <HowItWorks
+      badge={data.howItWorks.badge}
+      title={data.howItWorks.title}
+      steps={data.howItWorks.steps}
+    />
+
+    <HowItWorksV2
+      badge={data.howItWorks.badge}
+      title={data.howItWorks.title}
+      steps={data.howItWorks.steps}
+    />
+
+    <FeaturesSection
+      features={data.features}
+      partnerName={data.partnerName}
+    />
+
+    <TestimonialCarousel
+      testimonials={data.testimonials}
+      testimonialPartners={data.testimonialPartners}
+    />
+
+    <PricingSection
+      badge={data.pricing.badge}
+      headline={data.pricing.headline}
+      plans={data.pricing.plans}
+    />
+
+    <FAQSection faqs={data.faqs} />
+  </main>
+
+  <Footer />
+</PartnerLayout>

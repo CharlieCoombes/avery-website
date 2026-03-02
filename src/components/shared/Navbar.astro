@@ -1,0 +1,168 @@
+---
+interface Props {
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const { ctaText = 'Get 30 days free', ctaLink = '#pricing' } = Astro.props;
+---
+
+<nav class="navbar-wrapper" id="navbar">
+  <div class="navbar">
+    <a href="/" class="navbar-logo" aria-label="Avery home">
+      <img src="/assets/figma/avery-logo.svg" alt="Avery" width="32.3" height="28" />
+    </a>
+
+    <div class="navbar-links">
+      <a href="#how-it-works" class="nav-link">How It Works</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="https://help.averyapp.ai/" class="nav-link" target="_blank" rel="noopener">Docs</a>
+    </div>
+
+    <a href={ctaLink} class="navbar-cta">
+      {ctaText}
+    </a>
+
+    <button class="navbar-hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .navbar-wrapper {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: 100%;
+    max-width: var(--content-width);
+    padding: 0 20px;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 10px 12px;
+    background: white;
+    border: 1px solid rgba(26, 26, 26, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+  }
+
+  .navbar-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .navbar-logo img {
+    width: 32.3px;
+    height: 28px;
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .navbar-links .nav-link {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .navbar-links .nav-link:hover {
+    opacity: 0.7;
+  }
+
+  .navbar-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 8px 20px;
+    background: #44C0C0;
+    color: white;
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    border-radius: 100px;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    flex-shrink: 0;
+  }
+
+  .navbar-cta:hover {
+    background: var(--color-primary-hover);
+    transform: translateY(-1px);
+  }
+
+  .navbar-cta:active {
+    transform: translateY(0);
+  }
+
+  .navbar-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--color-text-primary);
+    border-radius: 1px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-links {
+      display: none;
+    }
+
+    .navbar-cta {
+      display: none;
+    }
+
+    .navbar-hamburger {
+      display: flex;
+    }
+  }
+</style>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      const navbarEl = navbar.querySelector('.navbar') as HTMLElement;
+      if (navbarEl) {
+        if (currentScroll > 100) {
+          navbarEl.style.background = 'rgba(255, 255, 255, 0.95)';
+          navbarEl.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.06)';
+        } else {
+          navbarEl.style.background = 'white';
+          navbarEl.style.boxShadow = 'none';
+        }
+      }
+    }, { passive: true });
+  }
+</script>

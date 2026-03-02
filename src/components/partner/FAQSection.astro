@@ -1,0 +1,321 @@
+---
+interface Props {
+  faqs: Array<{
+    question: string;
+    answer: string;
+  }>;
+  ctaText?: string;
+  ctaLink?: string;
+}
+
+const { faqs, ctaText = 'Get Started Now', ctaLink = '#pricing' } = Astro.props;
+---
+
+<section class="faq-section" id="faq">
+  <div class="faq-bg-wrap">
+    <img src="/assets/figma/faq-bg-mesh.png" alt="" class="faq-bg-img" />
+  </div>
+
+  <div class="faq-content">
+    <div class="faq-heading-wrap">
+      <h2 class="faq-title">Frequently asked Questions</h2>
+    </div>
+
+    <div class="faq-accordion" role="list">
+      {faqs.map((faq, index) => (
+        <div class="faq-item" role="listitem" data-faq-index={index}>
+          <button
+            class="faq-trigger"
+            aria-expanded={index === 0 ? "true" : "false"}
+            aria-controls={`faq-panel-${index}`}
+            id={`faq-trigger-${index}`}
+          >
+            <span class="faq-question-text">{faq.question}</span>
+            <span class="faq-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <line class="icon-h" x1="4" y1="10" x2="16" y2="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                <line class="icon-v" x1="10" y1="4" x2="10" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </span>
+          </button>
+          <div
+            class="faq-panel"
+            id={`faq-panel-${index}`}
+            role="region"
+            aria-labelledby={`faq-trigger-${index}`}
+            style={index === 0 ? "" : "height: 0px;"}
+          >
+            <div class="faq-panel-inner">
+              <p class="faq-answer">{faq.answer}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <a href={ctaLink} class="faq-cta">
+      <span>{ctaText}</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    background: white;
+    overflow: hidden;
+    position: relative;
+    padding: 80px 0;
+  }
+
+  .faq-bg-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .faq-bg-img {
+    width: 100%;
+    max-width: 1280px;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    border-radius: 32px;
+  }
+
+  .faq-content {
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .faq-heading-wrap {
+    padding: 0 12px;
+  }
+
+  .faq-title {
+    font-family: var(--font-primary);
+    font-size: 52px;
+    font-weight: 500;
+    letter-spacing: -2.08px;
+    text-transform: capitalize;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+  }
+
+  .faq-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 18px 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    gap: 24px;
+    transition: opacity 0.2s ease;
+  }
+
+  .faq-trigger:hover {
+    opacity: 0.7;
+  }
+
+  .faq-trigger:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+    border-radius: 4px;
+  }
+
+  .faq-question-text {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.36px;
+    color: var(--color-text-primary);
+  }
+
+  .faq-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-v {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+  }
+
+  .icon-h {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+  }
+
+  .faq-trigger[aria-expanded="true"] .icon-v {
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+
+  /* Panel animation */
+  .faq-panel {
+    overflow: hidden;
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq-panel-inner {
+    padding: 0 12px 20px;
+  }
+
+  .faq-answer {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    color: rgba(26, 26, 26, 0.7);
+    max-width: 777px;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .faq-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid white;
+    border-radius: 100px;
+    backdrop-filter: blur(2px);
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+    align-self: flex-start;
+    margin-left: 12px;
+    color: rgba(26, 26, 26, 0.7);
+  }
+
+  .faq-cta span {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    color: inherit;
+  }
+
+  .faq-cta:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-1px);
+    color: var(--color-text-primary);
+  }
+
+  .faq-cta:active {
+    transform: translateY(0);
+  }
+
+  .faq-cta:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 60px 0;
+    }
+
+    .faq-title {
+      font-size: 36px;
+      letter-spacing: -1.44px;
+    }
+
+    .faq-trigger {
+      padding: 16px 8px;
+    }
+
+    .faq-panel-inner {
+      padding: 0 8px 16px;
+    }
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    function initFAQ() {
+      var items = document.querySelectorAll('.faq-item');
+
+      items.forEach(function(item) {
+        var trigger = item.querySelector('.faq-trigger');
+        var panel = item.querySelector('.faq-panel');
+        if (!trigger || !panel) return;
+
+        var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+        if (isOpen) {
+          panel.style.height = panel.scrollHeight + 'px';
+        }
+
+        trigger.addEventListener('click', function() {
+          var expanded = trigger.getAttribute('aria-expanded') === 'true';
+
+          items.forEach(function(other) {
+            if (other === item) return;
+            var otherTrigger = other.querySelector('.faq-trigger');
+            var otherPanel = other.querySelector('.faq-panel');
+            if (!otherTrigger || !otherPanel) return;
+
+            if (otherTrigger.getAttribute('aria-expanded') === 'true') {
+              otherPanel.style.height = otherPanel.scrollHeight + 'px';
+              otherPanel.offsetHeight; // force reflow
+              otherTrigger.setAttribute('aria-expanded', 'false');
+              otherPanel.style.height = '0px';
+            }
+          });
+
+          if (expanded) {
+            panel.style.height = panel.scrollHeight + 'px';
+            panel.offsetHeight;
+            trigger.setAttribute('aria-expanded', 'false');
+            panel.style.height = '0px';
+          } else {
+            trigger.setAttribute('aria-expanded', 'true');
+            panel.style.height = panel.scrollHeight + 'px';
+
+            panel.addEventListener('transitionend', function handler() {
+              if (trigger.getAttribute('aria-expanded') === 'true') {
+                panel.style.height = 'auto';
+              }
+              panel.removeEventListener('transitionend', handler);
+            });
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFAQ);
+    } else {
+      initFAQ();
+    }
+  })();
+</script>
